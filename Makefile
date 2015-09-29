@@ -6,13 +6,14 @@
 #    By: emammadz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/29 12:05:06 by emammadz          #+#    #+#              #
-#    Updated: 2015/09/29 12:11:02 by emammadz         ###   ########.fr        #
+#    Updated: 2015/09/29 14:14:15 by emammadz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 EXEC = philo
 
 SRCC =	main.c\
+		loop.c\
 
 SRCO = $(SRCC:%.c=%.o)
 
