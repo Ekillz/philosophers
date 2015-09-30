@@ -6,7 +6,7 @@
 #    By: emammadz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/29 12:05:06 by emammadz          #+#    #+#              #
-#    Updated: 2015/09/29 14:14:15 by emammadz         ###   ########.fr        #
+#    Updated: 2015/09/30 17:28:06 by emammadz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCC =	main.c\
 
 SRCO = $(SRCC:%.c=%.o)
 
-FLAG = -Wall -Werror -Wextra
+FLAG = -Wall -Werror -Wextra -ggdb
 
 .PHONY: all fast clean fclean
 

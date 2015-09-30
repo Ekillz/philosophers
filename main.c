@@ -6,45 +6,74 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:22:12 by emammadz          #+#    #+#             */
-/*   Updated: 2015/09/29 17:00:23 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/09/30 17:51:04 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-pthread_mutex_t g_lock; // mettre dans struct //
-int				count;
+pthread_mutex_t		g_lock; // mettre dans struct //
+pthread_mutex_t		g_pain[7];
+int					count;
 
-/*static void		*baguette(void *arg)
+
+static void		rest(t_env *e)
 {
-	(void)arg;
-	
-	return (NULL);
-}*/
+	e->is_rest = true;
+	usleep(REST_T * SECOND);
+	e->is_rest = false;
+}
+
+static int		eat(t_env *e)
+{
+	int nb;
+	int t0;
+	int t1;
+
+	t0 = -1;
+	t1 = -1;
+	if (e->nb == 0)
+		nb = 6;
+	else
+		nb = e->nb - 1;
+	if ((t0 = pthread_mutex_trylock(&g_pain[e->nb])) == 0 && (t1 = pthread_mutex_trylock(&g_pain[nb])) == 0)
+	{
+		e->is_eat = true;
+		usleep(EAT_T * SECOND);
+		e->life = MAX_LIFE;
+		pthread_mutex_unlock(&g_pain[e->nb]);
+		pthread_mutex_unlock(&g_pain[nb]);
+		e->is_eat = false;
+		return (1);
+	}
+	if (t0 == 0)
+		pthread_mutex_unlock(&g_pain[e->nb]);
+	else if (t1 == 0)
+		pthread_mutex_unlock(&g_pain[nb]);
+	return (0);
+}
 
 static void		*mrPhilo(void *arg)
 {
 	t_env *e;
 
 	e = (t_env *)arg;
-	pthread_mutex_lock(&g_lock);
+	pthread_mutex_trylock(&g_lock);
 	count++;
 	e->nb = count;
 	pthread_mutex_unlock(&g_lock);
-	while (1)
+	while (e->life > 0)
 	{
-		usleep(SECOND);
-		e->life--;
-		if (e->life <= 0)
-		{
-			printf("philo[%d] is dead", e->nb); // mettre write, printf pas viable //
-			break;
-		}
+		if (eat(e))
+			rest(e);
+		else
+			think(e);
 	}
+	printf("philo[%d] is dead\n", e->nb); // mettre write, printf pas viable //
 	return (NULL);
 }
 
-static void		init_threads(pthread_t *philo, t_env *e)
+static void		init_threads_mutex(pthread_t *philo, t_env *e)
 {
 	int i;
 
@@ -52,11 +81,16 @@ static void		init_threads(pthread_t *philo, t_env *e)
 	count = -1;
 	while (i < 7)
 	{
+		pthread_mutex_init(&g_pain[i], NULL);
+		i++;
+	}
+	i = 0;
+	while (i < 7)
+	{
 		e[i].life = MAX_LIFE;
 		e[i].is_eat = false;
+		e[i].is_rest = false;
 		e[i].is_think = false;
-		e[i].is_chill = false;
-		pthread_mutex_init(&e[i].pain[i], NULL);
 		pthread_create(&philo[i], NULL, mrPhilo, &e[i]);
 		i++;
 	}
@@ -66,10 +100,12 @@ int				main(void)
 {
 	pthread_t			philo[7];
 	t_env				e[7];
-
+	
 	pthread_mutex_init(&g_lock, NULL);
-	init_threads(philo, e);
-	main_loop(e);
-	//pthread_mutex_destroy(&g_lock);
+	init_threads_mutex(philo, e);
+	show_info(e);
+	//if key == exit
+		//del_ressources(g_pain, philo);
+	pthread_mutex_destroy(&g_lock);
 	return (0);
 }
