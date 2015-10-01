@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:58:11 by emammadz          #+#    #+#             */
-/*   Updated: 2015/09/30 17:46:25 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/01 13:02:37 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	show_info(t_env *e)
 			usleep(SECOND);
 			life_steal(e);
 		}
-		if (e[i].life <= 0 )
+		if (e[i].life <= 0)
 			break;
 		if (e[i].is_eat)
 			printf("philo[%d] is eating: life = %d\n", e[i].nb, e[i].life);

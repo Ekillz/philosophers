@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:22:12 by emammadz          #+#    #+#             */
-/*   Updated: 2015/09/30 17:51:04 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/01 13:38:44 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ static int		eat(t_env *e)
 		nb = 6;
 	else
 		nb = e->nb - 1;
-	if ((t0 = pthread_mutex_trylock(&g_pain[e->nb])) == 0 && (t1 = pthread_mutex_trylock(&g_pain[nb])) == 0)
+	t0 = pthread_mutex_trylock(&g_pain[e->nb]);
+	t1 = pthread_mutex_trylock(&g_pain[nb]);
+	if (t0 == 0 && t1 == 0)
 	{
 		e->is_eat = true;
-		usleep(EAT_T * SECOND);
 		e->life = MAX_LIFE;
+		usleep(EAT_T * SECOND);
 		pthread_mutex_unlock(&g_pain[e->nb]);
 		pthread_mutex_unlock(&g_pain[nb]);
 		e->is_eat = false;
@@ -105,7 +107,7 @@ int				main(void)
 	init_threads_mutex(philo, e);
 	show_info(e);
 	//if key == exit
-		//del_ressources(g_pain, philo);
+	del_ressources(g_pain, philo);
 	pthread_mutex_destroy(&g_lock);
 	return (0);
 }

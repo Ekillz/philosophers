@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:16:08 by emammadz          #+#    #+#             */
-/*   Updated: 2015/09/30 17:46:02 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/01 13:22:15 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdio.h>
 
 # define SECOND		1000000
-# define MAX_LIFE	10
+# define MAX_LIFE	7
 # define EAT_T		1
 # define REST_T		1
 # define THINK_T	1
