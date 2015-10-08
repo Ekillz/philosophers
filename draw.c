@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/06 12:38:38 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/08 16:34:58 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/08 17:10:36 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,29 @@ static void		draw_circle(t_graph *t, int radius, int originX, int originY)
 	}
 }
 
-/*static void     show_state_info(t_graph *t)
+static void     show_state_info(t_graph *t)
 {
 	int i;
 
 	i = 0;
 	t->color = 0xff0000; 
-	draw_circle(t, 10, 50, 50);
+	draw_circle(t, 20, 50, 50);
 	t->color = 0x00ff00;
-	draw_circle(t, 20, 100, 50);
-	t->color = 0x000080;
 	draw_circle(t, 20, 150, 50);
+	t->color = 0x000080;
+	draw_circle(t, 20, 250, 50);
 	expose_hook(t);
 
-	mlx_string_put(t->mlx, t->win, 50, 50, 0xffff00, "EAT");
-	mlx_string_put(t->mlx, t->win, 100, 50, 0xffff00, "REST");
-	mlx_string_put(t->mlx, t->win, 150, 50, 0xffff00, "THINK");
+	mlx_string_put(t->mlx, t->win, 40, 50, 0xffff00, "EAT");
+	mlx_string_put(t->mlx, t->win, 140, 50, 0xffff00, "REST");
+	mlx_string_put(t->mlx, t->win, 240, 50, 0xffff00, "THINK");
 	while (i < 7)
 	{
 		mlx_string_put(t->mlx, t->win, t->e[i].x, t->e[i].y, 0xffff00, ft_itoa(t->e[i].life));
 		i++;
 	}
 }
-*/
+
 static void		draw_philos(t_graph *t)
 {
 	int i;
@@ -93,6 +93,6 @@ void			draw_scene(t_graph *t)
 	draw_circle(t, 100, HEIGHT / 2, HEIGHT / 2);
 	draw_philos(t);
 	expose_hook(t);
-	//show_state_info(t);
+	show_state_info(t);
 	ft_bzero(t->img, t->bpp * HEIGHT + WIDTH * t->size_line);
 }

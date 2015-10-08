@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:16:08 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/08 15:50:04 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/08 16:44:53 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "mlx/mlx.h"
 
 # define SECOND		1000000
-# define MAX_LIFE	15
+# define MAX_LIFE	10
 # define EAT_T		1
 # define REST_T		1
 # define THINK_T	1
