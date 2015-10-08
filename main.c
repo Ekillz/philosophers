@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:22:12 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/01 13:38:44 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/08 15:53:42 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 pthread_mutex_t		g_lock; // mettre dans struct //
 pthread_mutex_t		g_pain[7];
-int					count;
 
 
 static void		rest(t_env *e)
@@ -57,7 +56,8 @@ static int		eat(t_env *e)
 
 static void		*mrPhilo(void *arg)
 {
-	t_env *e;
+	t_env			*e;
+	static int		count = -1;
 
 	e = (t_env *)arg;
 	pthread_mutex_trylock(&g_lock);
@@ -75,12 +75,11 @@ static void		*mrPhilo(void *arg)
 	return (NULL);
 }
 
-static void		init_threads_mutex(pthread_t *philo, t_env *e)
+static void		init_threads_mutex(pthread_t *philo, t_env *e, t_graph *t)
 {
 	int i;
 
 	i = 0;
-	count = -1;
 	while (i < 7)
 	{
 		pthread_mutex_init(&g_pain[i], NULL);
@@ -96,18 +95,25 @@ static void		init_threads_mutex(pthread_t *philo, t_env *e)
 		pthread_create(&philo[i], NULL, mrPhilo, &e[i]);
 		i++;
 	}
+	t->e = e;
 }
 
 int				main(void)
 {
-	pthread_t			philo[7];
-	t_env				e[7];
-	
+	pthread_t			*philo;
+	t_env				*e;
+	t_graph				t;
+
+	philo = malloc(sizeof(pthread_t) * 7);
+	e = malloc(sizeof(t_env) * 7);
+	t.time = time(0);
 	pthread_mutex_init(&g_lock, NULL);
-	init_threads_mutex(philo, e);
-	show_info(e);
-	//if key == exit
-	del_ressources(g_pain, philo);
-	pthread_mutex_destroy(&g_lock);
+	init_threads_mutex(philo, e, &t);
+	declare_and_check_mlx_error(&t);
+	declarations_mlx(&t);
+	mlx_loop_hook(t.mlx, func_test,  &t);
+	mlx_loop(t.mlx);
+	//del_ressources(g_pain, philo);
+	//pthread_mutex_destroy(&g_lock);
 	return (0);
 }
