@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/05 12:44:39 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/08 13:36:50 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/09 13:44:27 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ int		key_press_hook(int keycode, t_graph *e)
 {
 	(void)e;
 	if (keycode == 53)
-		exit (0);
+		exit(0);
+	else if (keycode == 15)
+	{
+		del_ressources();
+		exit(0);
+	}
 	return (0);
 }

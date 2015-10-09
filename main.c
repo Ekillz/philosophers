@@ -6,21 +6,25 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:22:12 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/08 15:53:42 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/09 17:15:01 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-pthread_mutex_t		g_lock; // mettre dans struct //
+pthread_mutex_t		g_lock;
 pthread_mutex_t		g_pain[7];
+pthread_t			philo[7];
 
-
-static void		rest(t_env *e)
+void			del_ressources(void)
 {
-	e->is_rest = true;
-	usleep(REST_T * SECOND);
-	e->is_rest = false;
+	int i;
+	i = 0;
+	while (i < 7)
+	{
+		pthread_mutex_destroy(&g_pain[i]);
+		i++;
+	}
 }
 
 static int		eat(t_env *e)
@@ -67,11 +71,10 @@ static void		*mrPhilo(void *arg)
 	while (e->life > 0)
 	{
 		if (eat(e))
-			rest(e);
-		else
-			think(e);
+			rest(&e->is_rest);
+		else if (!think(e, g_pain))
+			rest(&e->is_rest);
 	}
-	printf("philo[%d] is dead\n", e->nb); // mettre write, printf pas viable //
 	return (NULL);
 }
 
@@ -95,25 +98,29 @@ static void		init_threads_mutex(pthread_t *philo, t_env *e, t_graph *t)
 		pthread_create(&philo[i], NULL, mrPhilo, &e[i]);
 		i++;
 	}
+	i = 0;
+	while (i < 7)
+	{
+		pthread_detach(philo[i]);
+		i++;
+	}
 	t->e = e;
 }
 
 int				main(void)
 {
-	pthread_t			*philo;
 	t_env				*e;
 	t_graph				t;
 
-	philo = malloc(sizeof(pthread_t) * 7);
 	e = malloc(sizeof(t_env) * 7);
 	t.time = time(0);
+	t.dead = -1;
 	pthread_mutex_init(&g_lock, NULL);
 	init_threads_mutex(philo, e, &t);
 	declare_and_check_mlx_error(&t);
 	declarations_mlx(&t);
 	mlx_loop_hook(t.mlx, func_test,  &t);
 	mlx_loop(t.mlx);
-	//del_ressources(g_pain, philo);
-	//pthread_mutex_destroy(&g_lock);
+	pthread_mutex_destroy(&g_lock);
 	return (0);
 }

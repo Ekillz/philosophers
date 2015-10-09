@@ -6,20 +6,48 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:58:11 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/08 15:15:09 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/09 17:15:04 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	think(t_env *e)
+void	rest(bool *rest)
 {
-	e->is_think = true;
-	usleep(THINK_T * SECOND);
-	e->is_think = false;
+	*rest = true;
+	usleep(REST_T * SECOND);
+	*rest = false;
 }
 
-void	life_steal(t_env *e)
+int		think(t_env *e, pthread_mutex_t *g_pain)
+{
+	int nb;
+	int t0;
+	int t1;
+
+	t0 = -1;
+	t1 = -1;
+	if (e->nb == 0)
+		nb = 6;
+	else
+		nb = e->nb - 1;
+	t0 = pthread_mutex_trylock(&g_pain[e->nb]);
+	t1 = pthread_mutex_trylock(&g_pain[nb]);
+	if (t0 == 0)
+		pthread_mutex_unlock(&g_pain[e->nb]);
+	if (t1 == 0)
+		pthread_mutex_unlock(&g_pain[nb]);
+	if (t0 == 0 || t1 == 0)
+	{
+		e->is_think = true;
+		usleep(THINK_T * SECOND);
+		e->is_think = false;
+		return (1);
+	}
+	return (0);
+}
+
+void	life_steal(t_env *e, int *dead)
 {
 	int i;
 
@@ -28,30 +56,27 @@ void	life_steal(t_env *e)
 	{
 		if (!e[i].is_eat)
 			e[i].life--;
+		if (e[i].life <= 0)
+			*dead = e[i].nb;
 		i++;
 	}
 }
 
 int func_test(t_graph *t)
 {
-	draw_scene(t);
-	if ((time(0) - t->time) > TIMEOUT)
-		exit(0);
-	usleep(SECOND);
-	life_steal(t->e);
-	return (0);
-}
-
-void	del_ressources(pthread_mutex_t *g_pain, pthread_t *philo)
-{
-	int i;
-
-	i = 0;
-	while (i < 7)
+	if (t->dead > -1)
 	{
-		pthread_detach(philo[i]);
-		pthread_mutex_destroy(&g_pain[i]);
-		i++;
+		draw_scene(t);
+		usleep(SECOND);
+		exit(0);
 	}
-
+	else if ((time(0) - t->time) < TIMEOUT)
+	{
+		usleep(SECOND);
+		draw_scene(t);
+		life_steal(t->e, &t->dead);
+	}
+	else
+		mlx_string_put(t->mlx, t->win, 450, 150, 0xffff00, "Now, it is time... To DAAAAAAAANCE!!!");
+	return (0);
 }

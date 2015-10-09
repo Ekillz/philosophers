@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/06 12:38:38 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/08 17:10:36 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/09 17:15:06 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ static void     show_state_info(t_graph *t)
 	mlx_string_put(t->mlx, t->win, 40, 50, 0xffff00, "EAT");
 	mlx_string_put(t->mlx, t->win, 140, 50, 0xffff00, "REST");
 	mlx_string_put(t->mlx, t->win, 240, 50, 0xffff00, "THINK");
+	mlx_string_put(t->mlx, t->win, 500, 200, 0xffff00, ft_itoa(time(0) - t->time));
+	mlx_string_put(t->mlx, t->win, 400, 20, 0xffff00, "MAX_LIFE: ");
+	mlx_string_put(t->mlx, t->win, 500, 20, 0xffff00, ft_itoa(MAX_LIFE));
+	mlx_string_put(t->mlx, t->win, 400, 40, 0xffff00, "EAT: ");
+	mlx_string_put(t->mlx, t->win, 500, 40, 0xffff00, ft_itoa(EAT_T));
+	mlx_string_put(t->mlx, t->win, 400, 60, 0xffff00, "REST: ");
+	mlx_string_put(t->mlx, t->win, 500, 60, 0xffff00, ft_itoa(REST_T));
+	mlx_string_put(t->mlx, t->win, 400, 80, 0xffff00, "THINK: ");
+	mlx_string_put(t->mlx, t->win, 500, 80, 0xffff00, ft_itoa(THINK_T));
+	mlx_string_put(t->mlx, t->win, 400, 100, 0xffff00, "TIMEOUT: ");
+	mlx_string_put(t->mlx, t->win, 500, 100, 0xffff00, ft_itoa(TIMEOUT));
 	while (i < 7)
 	{
 		mlx_string_put(t->mlx, t->win, t->e[i].x, t->e[i].y, 0xffff00, ft_itoa(t->e[i].life));

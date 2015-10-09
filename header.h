@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:16:08 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/08 16:44:53 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/09 17:15:02 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include "mlx/mlx.h"
 
 # define SECOND		1000000
-# define MAX_LIFE	10
+# define MAX_LIFE	15
 # define EAT_T		1
 # define REST_T		1
 # define THINK_T	1
-# define TIMEOUT	60
+# define TIMEOUT	30
 
 # define HEIGHT		1000
 # define WIDTH		1000
@@ -53,13 +53,15 @@ typedef struct	s_graph
 	int					endian;
 	int					time;
 	int					color;
+	int					dead;
 	t_env				*e;
 }				t_graph;
 
 void					show_info(t_env *e);
-void					del_ressources(pthread_mutex_t *g_pain, pthread_t *philo);
-void					think(t_env *e);
-void					life_steal(t_env *e);
+void					del_ressources(void);
+int						think(t_env *e, pthread_mutex_t *g_pain);
+void					rest(bool *rest);
+void					life_steal(t_env *e, int *dead);
 void					show_philo(t_graph *t, t_env *e);
 void					draw_scene(t_graph *t);
 int						func_test(t_graph *param);
