@@ -6,7 +6,7 @@
 #    By: emammadz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/29 12:05:06 by emammadz          #+#    #+#              #
-#    Updated: 2015/10/08 16:09:39 by emammadz         ###   ########.fr        #
+#    Updated: 2015/10/13 17:23:35 by emammadz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,10 @@ SRCC =	main.c\
 		ft_bzero.c\
 		ft_memcpy.c\
 		ft_itoa.c\
+		ft_memdel.c\
+		ft_freetab.c\
 		draw.c\
+		draw2.c\
 
 SRCO = $(SRCC:%.c=%.o)
 
@@ -40,6 +43,7 @@ philo: $(SRCO)
 	@gcc -o $(EXEC) $(FLAG) $(SRCO) mlx/libmlx.a $(LIB)
 
 clean:
+	@make clean -C mlx
 	@rm -f $(SRCO)
 
 fclean: clean

@@ -6,13 +6,13 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/05 12:44:39 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/09 13:44:27 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/13 15:51:19 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void declare_and_check_mlx_error(t_graph *e)
+void	declare_and_check_mlx_error(t_graph *e)
 {
 	if (!(e->mlx = mlx_init()))
 	{
@@ -26,7 +26,7 @@ void declare_and_check_mlx_error(t_graph *e)
 	}
 }
 
-void    declarations_mlx(t_graph *e)
+void	declarations_mlx(t_graph *e)
 {
 	e->img_ptr = mlx_new_image(e->mlx, WIDTH, HEIGHT);
 	e->img = mlx_get_data_addr(e->img_ptr, &e->bpp, &e->size_line, &e->endian);

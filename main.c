@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:22:12 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/09 17:15:01 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/13 17:22:51 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 pthread_mutex_t		g_lock;
 pthread_mutex_t		g_pain[7];
-pthread_t			philo[7];
+pthread_t			g_philo[7];
 
 void			del_ressources(void)
 {
 	int i;
+
 	i = 0;
 	while (i < 7)
 	{
@@ -35,10 +36,8 @@ static int		eat(t_env *e)
 
 	t0 = -1;
 	t1 = -1;
-	if (e->nb == 0)
-		nb = 6;
-	else
-		nb = e->nb - 1;
+	nb = e->nb - 1;
+	e->nb == 0 ? (nb = 6) : 0;
 	t0 = pthread_mutex_trylock(&g_pain[e->nb]);
 	t1 = pthread_mutex_trylock(&g_pain[nb]);
 	if (t0 == 0 && t1 == 0)
@@ -58,7 +57,7 @@ static int		eat(t_env *e)
 	return (0);
 }
 
-static void		*mrPhilo(void *arg)
+static void		*mrphilo(void *arg)
 {
 	t_env			*e;
 	static int		count = -1;
@@ -95,7 +94,7 @@ static void		init_threads_mutex(pthread_t *philo, t_env *e, t_graph *t)
 		e[i].is_eat = false;
 		e[i].is_rest = false;
 		e[i].is_think = false;
-		pthread_create(&philo[i], NULL, mrPhilo, &e[i]);
+		pthread_create(&philo[i], NULL, mrphilo, &e[i]);
 		i++;
 	}
 	i = 0;
@@ -116,10 +115,10 @@ int				main(void)
 	t.time = time(0);
 	t.dead = -1;
 	pthread_mutex_init(&g_lock, NULL);
-	init_threads_mutex(philo, e, &t);
+	init_threads_mutex(g_philo, e, &t);
 	declare_and_check_mlx_error(&t);
 	declarations_mlx(&t);
-	mlx_loop_hook(t.mlx, func_test,  &t);
+	mlx_loop_hook(t.mlx, func_test, &t);
 	mlx_loop(t.mlx);
 	pthread_mutex_destroy(&g_lock);
 	return (0);

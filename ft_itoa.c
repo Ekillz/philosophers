@@ -6,18 +6,18 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/08 15:35:03 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/08 15:35:23 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/13 16:45:25 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-char        *ft_itoa(int n)
+char		*ft_itoa(int n)
 {
-	char    *ret;
-	int     size;
-	int     conv;
-	int     neg;
+	char	*ret;
+	int		size;
+	int		conv;
+	int		neg;
 
 	size = 1;
 	neg = ((n < 0) ? 1 : 0);

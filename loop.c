@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:58:11 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/09 17:15:04 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/13 17:12:13 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	life_steal(t_env *e, int *dead)
 	}
 }
 
-int func_test(t_graph *t)
+int		func_test(t_graph *t)
 {
 	if (t->dead > -1)
 	{
@@ -77,6 +77,7 @@ int func_test(t_graph *t)
 		life_steal(t->e, &t->dead);
 	}
 	else
-		mlx_string_put(t->mlx, t->win, 450, 150, 0xffff00, "Now, it is time... To DAAAAAAAANCE!!!");
+		mlx_string_put(t->mlx, t->win,
+				450, 150, 0xffff00, "Now, it is time... To DAAAAAAAANCE!!!");
 	return (0);
 }
