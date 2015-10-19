@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:16:08 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/13 17:22:52 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/19 15:19:14 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define EAT_T			1
 # define REST_T			1
 # define THINK_T		1
-# define TIMEOUT		30
+# define TIMEOUT		60
 
 # define HEIGHT			1000
 # define WIDTH			1000
@@ -54,9 +54,19 @@ typedef struct			s_graph
 	int					time;
 	int					color;
 	int					dead;
+	int					*posx;
+	int					*posy;
+	int					**lifes;
+	int					*stickx;
+	int					*sticky;
 	t_env				*e;
 }						t_graph;
 
+void					choose_baguette_color(int *color, int index, t_env *e);
+void					get_baguette_coord(t_graph *t);
+void					get_philo_coord(t_env *e);
+void					get_philo_lives(t_graph *t);
+void					get_pos(t_graph *t);
 void					show_info(t_env *e);
 void					del_ressources(void);
 int						think(t_env *e, pthread_mutex_t *g_pain);

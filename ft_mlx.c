@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/05 12:44:39 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/13 15:51:19 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/15 15:54:18 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ int		expose_hook(t_graph *e)
 
 int		key_press_hook(int keycode, t_graph *e)
 {
-	(void)e;
 	if (keycode == 53)
+	{
+		del_ressources();
 		exit(0);
-	else if (keycode == 15)
+	}
+	else if (keycode == 15 && ((time(0) - e->time) > TIMEOUT))
 	{
 		del_ressources();
 		exit(0);

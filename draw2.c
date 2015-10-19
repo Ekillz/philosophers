@@ -6,11 +6,56 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/13 15:39:49 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/13 18:34:58 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/19 12:28:22 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
+void			get_philo_coord(t_env *e)
+{
+	e[0].x = 699;
+	e[0].y = 491;
+	e[1].x = 634;
+	e[1].y = 352;
+	e[2].x = 439;
+	e[2].y = 309;
+	e[3].x = 322;
+	e[3].y = 408;
+	e[4].x = 331;
+	e[4].y = 607;
+	e[5].x = 456;
+	e[5].y = 695;
+	e[6].x = 608;
+	e[6].y = 668;
+}
+
+void			get_pos(t_graph *t)
+{
+	int i;
+	int e;
+
+	e = 0;
+	t->posx = malloc(sizeof(int) * 7);
+	t->posy = malloc(sizeof(int) * 7);
+	while (e < 7)
+	{
+		i = 0;
+		while (i < 7)
+		{
+			if (t->e[i].nb == e)
+			{
+				t->posx[e] = t->e[i].x;
+				t->posy[e] = t->e[i].y;
+				e++;
+				break ;
+			}
+			i++;
+		}
+	}
+	t->posx[e] = 0;
+	t->posy[e] = 0;
+}
 
 static char		*get_char(int which)
 {
@@ -40,11 +85,11 @@ static void		show_life(t_graph *t, char **ptr)
 	{
 		write(1, "", 0);
 		mlx_string_put(t->mlx, t->win,
-				t->e[i].x, t->e[i].y, 0xffff00,
-				ptr[i + 5] = get_char(t->e[i].life));
+				t->posx[i], t->posy[i], 0xffff00,
+				ptr[i + 5] = get_char(*(t->lifes[i])));
 		mlx_string_put(t->mlx, t->win,
-				t->e[i].x, t->e[i].y - 35, 0xffff00,
-				ptr[i + 12] = get_char(t->e[i].nb));
+				t->posx[i], t->posy[i] - 35, 0xffff00,
+				ptr[i + 12] = get_char(i));
 		i++;
 	}
 	ptr[19] = NULL;

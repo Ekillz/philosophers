@@ -6,7 +6,7 @@
 #    By: emammadz <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/09/29 12:05:06 by emammadz          #+#    #+#              #
-#    Updated: 2015/10/13 17:23:35 by emammadz         ###   ########.fr        #
+#    Updated: 2015/10/15 14:39:29 by emammadz         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCC =	main.c\
 		ft_freetab.c\
 		draw.c\
 		draw2.c\
+		draw3.c\
 
 SRCO = $(SRCC:%.c=%.o)
 

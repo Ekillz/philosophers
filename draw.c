@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/06 12:38:38 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/13 18:27:05 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/19 13:21:39 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,21 @@ static void		show_state_info(t_graph *t)
 static void		draw_philos(t_graph *t)
 {
 	int i;
-	int coef;
-	int x;
-	int y;
 
 	i = 0;
-	coef = 1;
 	while (i < 7)
 	{
-		x = HEIGHT / 2 + cos(coef) * 200;
-		y = HEIGHT / 2 - sin(coef) * 200;
-		t->e[i].x = x;
-		t->e[i].y = y;
 		choose_color(&t->color, &t->e[i]);
-		draw_circle(t, 20, x, y);
-		coef += 61;
+		draw_circle(t, 20, t->e[i].x, t->e[i].y);
+		choose_baguette_color(&t->color, i, t->e);
+		draw_circle(t, 10, t->stickx[i], t->sticky[i]);
 		i++;
 	}
 }
 
 void			draw_scene(t_graph *t)
 {
-	t->color = 0xff0000;
+	t->color = 0xcc0000;
 	draw_circle(t, 100, HEIGHT / 2, HEIGHT / 2);
 	draw_philos(t);
 	expose_hook(t);

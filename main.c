@@ -6,7 +6,7 @@
 /*   By: emammadz <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/09/29 13:22:12 by emammadz          #+#    #+#             */
-/*   Updated: 2015/10/13 17:22:51 by emammadz         ###   ########.fr       */
+/*   Updated: 2015/10/19 15:17:50 by emammadz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,23 @@ static void		init_threads_mutex(pthread_t *philo, t_env *e, t_graph *t)
 {
 	int i;
 
-	i = 0;
-	while (i < 7)
-	{
+	i = -1;
+	while (++i < 7)
 		pthread_mutex_init(&g_pain[i], NULL);
-		i++;
-	}
-	i = 0;
-	while (i < 7)
+	i = -1;
+	usleep(100);
+	while (++i < 7)
 	{
 		e[i].life = MAX_LIFE;
 		e[i].is_eat = false;
 		e[i].is_rest = false;
 		e[i].is_think = false;
 		pthread_create(&philo[i], NULL, mrphilo, &e[i]);
-		i++;
 	}
-	i = 0;
-	while (i < 7)
-	{
+	i = -1;
+	usleep(100);
+	while (++i < 7)
 		pthread_detach(philo[i]);
-		i++;
-	}
 	t->e = e;
 }
 
@@ -116,8 +111,12 @@ int				main(void)
 	t.dead = -1;
 	pthread_mutex_init(&g_lock, NULL);
 	init_threads_mutex(g_philo, e, &t);
+	get_philo_lives(&t);
 	declare_and_check_mlx_error(&t);
 	declarations_mlx(&t);
+	get_philo_coord(t.e);
+	get_pos(&t);
+	get_baguette_coord(&t);
 	mlx_loop_hook(t.mlx, func_test, &t);
 	mlx_loop(t.mlx);
 	pthread_mutex_destroy(&g_lock);
